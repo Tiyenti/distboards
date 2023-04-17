@@ -2,148 +2,100 @@
 <html>
     <head>
         <title>Distance Leaderboard Site</title>
-        <script src="./ladderdata.js"></script>
-        <script>
-
-            var params = new URLSearchParams(window.location.search);
-            var mapName = params.get("map");
-            var board = params.get("ladder");
-
-
-
-            if (board == null) board = "combined";
-
-            // snipped copied from the GraphQL code exporter, with some adjustments
-
-            async function fetchGraphQL(operationsDoc, operationName, variables) {
-            const result = await fetch(
-            "https://distance-db-hasura.seekr.pw/v1/graphql",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                query: operationsDoc,
-                variables: variables,
-                operationName: operationName
-                })
-            }
-            );
-
-            return await result.json();
-            }
-
-            const operationsDoc = `
-            query MyQuery {
-            get_official_level_by_name(args: {level_name: "` + mapName + `"}) {
-                sprint_leaderboard_entries {
-                user {
-                    name
-                    steam_id
-                }
-                steam_id
-                rank
-                time
-                }
-            }
-            }
-            `;
-
-            function fetchMyQuery() {
-                return fetchGraphQL(
-                    operationsDoc,
-                    "MyQuery",
-                    {}
-                );
-            }
-
-            async function startFetchMyQuery() {
-            const { errors, data } = await fetchMyQuery();
-
-                if (errors) {
-                    // handle those errors like a pro
-                    console.error(errors);
-                }
-
-                // do something great with this precious data
-                console.log(data);
-                receivedLeaderboardData = data;
-                fillLeaderboard(receivedLeaderboardData, board);
-            }
-
-            startFetchMyQuery();
-        </script>
-        <script>
-            var receivedLeaderboardData = null;
-
-            function fillLeaderboard(data, ladder)
-            {
-
-                var table = document.getElementById("the-leaderboard");
-                
-                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>Ladder</th><th>Time</th></tr>";
-
-                var rankSubtract = 0;
-                var items = 0;
-                for (var item of data["get_official_level_by_name"][0]["sprint_leaderboard_entries"])
-                {
-                    if (items == 100) break;
-
-                    var playerLadder = "unassigned"
-                    if (item["steam_id"] in ladderdata)
-                    {
-                        playerLadder = ladderdata[item["steam_id"]]
-                    }
-
-                    if (playerLadder != "banned" &&
-                        ((ladder == "nowb" && (playerLadder == "nowb" || playerLadder == "unassigned")) ||
-                        (ladder == "wb" && (playerLadder == "wb")) ||
-                        (ladder == "combined")))
-                    {
-                        table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
-                                            "<td>" + (item["rank"] - rankSubtract) + "</td>" +
-                                            "<td>" + item["user"]["name"] + "</td>" +
-                                            "<td>" + playerLadder + "</td>" + 
-                                            "<td>" + formatTime(item["time"]) + "</td>" +
-                                             "</tr>"
-
-                        items += 1;
-                    }
-                    else
-                    {
-                        rankSubtract += 1;
-                    }
-                }
-
-                if (items > 0)
-                {
-                    document.getElementById("map-name-header").innerText = mapName;
-                }
-                else
-                {
-                    document.getElementById("map-name-header").innerText = "No items, something probably went wrong."
-                }
-            }
-
-            function formatTime(time)
-            {
-                var minutes = Math.floor(time / 1000 / 60);
-                var seconds = time / 1000 % 60;
-
-                var secondsStr = seconds.toFixed(2);
-                if (seconds < 10) secondsStr = "0" + seconds.toFixed(2);
-
-                return minutes + ":" + secondsStr;
-            }
-        </script>
     </head>
     <body>
         <h1>Distance Leaderboard Site</h1>
 
-        <h2 id="map-name-header">Loading...</h2>
-
-        Filter - <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
-        <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
-
-        <table id="the-leaderboard" border="1">
-        </table>
+        <h2>Ignition</h2>
+        <ul>
+            <li><a href="map.html?name=Chroma">Chroma</a></li> 
+            <li><a href="map.html?name=Vector Valley">Vector Valley</a></li> 
+            <li><a href="map.html?name=Static Fire Signal">Static Fire Signal</a></li> 
+            <li><a href="map.html?name=Shallow">Shallow</a></li> 
+            <li><a href="map.html?name=Incline">Incline</a></li> 
+            <li><a href="map.html?name=Station">Station</a></li> 
+            <li><a href="map.html?name=Whisper">Whisper</a></li> 
+            <li><a href="map.html?name=Particular Journey">Particular Journey</a></li> 
+            <li><a href="map.html?name=Turbines">Turbines</a></li> 
+            <li><a href="map.html?name=COAT Speedway">COAT Speedway</a></li> 
+            <li><a href="map.html?name=Tharsis Tholus">Tharsis Tholus</a></li> 
+        </ul>
+        <h2>High Impact</h2>
+        <ul>
+            <li><a href="map.html?name=Virtual Rift">Virtual Rift</a></li>
+            <li><a href="map.html?name=Sea">Sea</a></li>
+            <li><a href="map.html?name=Beta Echoes">Beta Echoes</a></li>
+            <li><a href="map.html?name=Sender">Sender</a></li>
+            <li><a href="map.html?name=Fiber">Fiber</a></li>
+            <li><a href="map.html?name=The Manor">The Manor</a></li>
+            <li><a href="map.html?name=Uncanny Valley">Uncanny Valley</a></li>
+            <li><a href="map.html?name=Le Teleputo">Le Teleputo</a></li>
+            <li><a href="map.html?name=Method">Method</a></li>
+            <li><a href="map.html?name=Binary Construct">Binary Construct</a></li>
+            <li><a href="map.html?name=Amusement">Amusement</a></li>
+            <li><a href="map.html?name=Outrun">Outrun</a></li>
+            <li><a href="map.html?name=Iris">Iris</a></li>
+        </ul>
+        <h2>Brute Force</h2>
+        <ul>
+            <li><a href="map.html?name=Volcanic Rush">Volcanic Rush</a></li>
+            <li><a href="map.html?name=Ruin">Ruin</a></li>
+            <li><a href="map.html?name=Moonlight">Moonlight</a></li>
+            <li><a href="map.html?name=Instability">Instability</a></li>
+            <li><a href="map.html?name=Shafty">Shafty</a></li>
+            <li><a href="map.html?name=Precept">Precept</a></li>
+            <li><a href="map.html?name=Overdrive">Overdrive</a></li>
+            <li><a href="map.html?name=Past">Past</a></li>
+            <li><a href="map.html?name=Neo Seoul">Neo Seoul</a></li>
+            <li><a href="map.html?name=Event Horizon">Event Horizon</a></li>
+            <li><a href="map.html?name=Yellow">Yellow</a></li>
+            <li><a href="map.html?name=Sugar Rush">Sugar Rush</a></li>
+            <li><a href="map.html?name=Sword">Sword</a></li>
+            <li><a href="map.html?name=Forsaken Shrine">Forsaken Shrine</a></li>
+            <li><a href="map.html?name=Noir">Noir</a></li>
+            <li><a href="map.html?name=Brink">Brink</a></li>
+            <li><a href="map.html?name=Projection">Projection</a></li>
+            <li><a href="map.html?name=Vibe">Vibe</a></li>
+            <li><a href="map.html?name=Luminescence">Luminescence</a></li>
+        </ul>
+        <h2>Overdrive</h2>
+        <ul>
+            <li><a href="map.html?name=Paradise Lost">Paradise Lost</a></li>
+            <li><a href="map.html?name=Epicentre">Epicentre</a></li>
+            <li><a href="map.html?name=Neo Seoul II">Neo Seoul II</a></li>
+            <li><a href="map.html?name=Serenity">Serenity</a></li>
+            <li><a href="map.html?name=Red">Red</a></li>
+            <li><a href="map.html?name=Knowledge">Knowledge</a></li>
+            <li><a href="map.html?name=White">White</a></li>
+            <li><a href="map.html?name=Tetreal">Tetreal</a></li>
+            <li><a href="map.html?name=Mentality">Mentality</a></li>
+            <li><a href="map.html?name=Wired">Wired</a></li>
+            <li><a href="map.html?name=Hardline">Hardline</a></li>
+            <li><a href="map.html?name=Gravity">Gravity</a></li>
+            <li><a href="map.html?name=Digital">Digital</a></li>
+            <li><a href="map.html?name=Monument">Monument</a></li>
+            <li><a href="map.html?name=Fulcrum">Fulcrum</a></li>
+            <li><a href="map.html?name=SR Motorplex">SR Motorplex</a></li>
+            <li><a href="map.html?name=Hard Light Transfer">Hard Light Transfer</a></li>
+            <li><a href="map.html?name=Impulse">Impulse</a></li>
+            <li><a href="map.html?name=Observatory">Observatory</a></li>
+            <li><a href="map.html?name=Eclipse">Eclipse</a></li>
+            <li><a href="map.html?name=Shrine">Shrine</a></li>
+            <li><a href="map.html?name=Liminal">Liminal</a></li>
+            <li><a href="map.html?name=White Lightning Returns">White Lightning Returns</a></li>
+        </ul>
+        <h2>Nightmare Fuel</h2>
+        <ul>
+            <li><a href="map.html?name=Affect">Affect</a></li>
+            <li><a href="map.html?name=The Night Before">The Night Before</a></li>
+            <li><a href="map.html?name=Industrial Fury">Industrial Fury</a></li>
+            <li><a href="map.html?name=Fallback Protocol">Fallback Protocol</a></li>
+            <li><a href="map.html?name=Cosmic Glitch">Cosmic Glitch</a></li>
+            <li><a href="map.html?name=Zenith">Zenith</a></li>
+            <li><a href="map.html?name=Candles of Hekate">Candles of Hekate</a></li>
+            <li><a href="map.html?name=Sector 0">Sector 0</a></li>
+            <li><a href="map.html?name=Micro">Micro</a></li>
+            <li><a href="map.html?name=Inferno">Inferno</a></li>
+        </ul>
     </body>
 </html>
