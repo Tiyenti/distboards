@@ -8,4 +8,6 @@ var ladderdata =
 
     // Banned Players
     "76561198212480060": "banned",
+    "76561198559391102": "banned",
+    "76561198128379032": "banned",
 }

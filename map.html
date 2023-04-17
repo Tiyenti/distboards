@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Distance Leaderboard Site</title>
+        <script src="./ladderdata.js"></script>
+        <script>
+
+            var params = new URLSearchParams(window.location.search);
+            var mapName = params.get("name");
+            var board = params.get("ladder");
+
+
+
+            if (board == null) board = "combined";
+
+            // snipped copied from the GraphQL code exporter, with some adjustments
+
+            async function fetchGraphQL(operationsDoc, operationName, variables) {
+            const result = await fetch(
+            "https://distance-db-hasura.seekr.pw/v1/graphql",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                query: operationsDoc,
+                variables: variables,
+                operationName: operationName
+                })
+            }
+            );
+
+            return await result.json();
+            }
+
+            const operationsDoc = `
+            query MyQuery {
+            get_official_level_by_name(args: {level_name: "` + mapName + `"}) {
+                sprint_leaderboard_entries {
+                user {
+                    name
+                    steam_id
+                }
+                steam_id
+                rank
+                time
+                }
+            }
+            }
+            `;
+
+            function fetchMyQuery() {
+                return fetchGraphQL(
+                    operationsDoc,
+                    "MyQuery",
+                    {}
+                );
+            }
+
+            async function startFetchMyQuery() {
+            const { errors, data } = await fetchMyQuery();
+
+                if (errors) {
+                    // handle those errors like a pro
+                    console.error(errors);
+                }
+
+                // do something great with this precious data
+                console.log(data);
+                receivedLeaderboardData = data;
+                fillLeaderboard(receivedLeaderboardData, board);
+            }
+
+            startFetchMyQuery();
+        </script>
+        <script>
+            var receivedLeaderboardData = null;
+
+            function fillLeaderboard(data, ladder)
+            {
+
+                var table = document.getElementById("the-leaderboard");
+                
+                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>Ladder</th><th>Time</th></tr>";
+
+                var rankSubtract = 0;
+                var items = 0;
+                for (var item of data["get_official_level_by_name"][0]["sprint_leaderboard_entries"])
+                {
+                    if (items == 100) break;
+
+                    var playerLadder = "unassigned"
+                    if (item["steam_id"] in ladderdata)
+                    {
+                        playerLadder = ladderdata[item["steam_id"]]
+                    }
+
+                    if (playerLadder != "banned" &&
+                        ((ladder == "nowb" && (playerLadder == "nowb" || playerLadder == "unassigned")) ||
+                        (ladder == "wb" && (playerLadder == "wb")) ||
+                        (ladder == "combined")))
+                    {
+                        table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
+                                            "<td>" + (item["rank"] - rankSubtract) + "</td>" +
+                                            "<td>" + item["user"]["name"] + "</td>" +
+                                            "<td>" + playerLadder + "</td>" + 
+                                            "<td>" + formatTime(item["time"]) + "</td>" +
+                                             "</tr>"
+
+                        items += 1;
+                    }
+                    else
+                    {
+                        rankSubtract += 1;
+                    }
+                }
+
+                if (items > 0)
+                {
+                    document.getElementById("map-name-header").innerText = mapName;
+                }
+                else
+                {
+                    document.getElementById("map-name-header").innerText = "No items, something probably went wrong."
+                }
+            }
+
+            function formatTime(time)
+            {
+                var minutes = Math.floor(time / 1000 / 60);
+                var seconds = time / 1000 % 60;
+
+                var secondsStr = seconds.toFixed(2);
+                if (seconds < 10) secondsStr = "0" + seconds.toFixed(2);
+
+                return minutes + ":" + secondsStr;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Distance Leaderboard Site</h1>
+
+        <h2 id="map-name-header">Loading...</h2>
+
+        Filter - <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
+        <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
+
+        <table id="the-leaderboard" border="1">
+        </table>
+    </body>
+</html>
