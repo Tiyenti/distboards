@@ -108,6 +108,8 @@
                 {
                     if (items == 100) break;
 
+                    var ladderPillIcons = "👤";
+
                     var playerLadder = "unassigned"
                     var playerExceptions = []
                     if (item["steam_id"] in ladderdata)
@@ -119,6 +121,14 @@
                         {
                             //if (playerExceptions[mapName]["time"] == item["time"])
                             //{
+                                if (playerExceptions[mapName] == playerLadder)
+                                {
+                                    ladderPillIcons = "🗺️👤"
+                                }
+                                else
+                                {
+                                    ladderPillIcons = "🗺️"
+                                }
                                 playerLadder = playerExceptions[mapName];
                             //}
                         }
@@ -135,8 +145,8 @@
                         }
 
                         var ladderPill = ""
-                        if (playerLadder == "wb") ladderPill = "<span class='wb'>WB</span>";
-                        if (playerLadder == "nowb") ladderPill = "<span class='nowb'>No WB</span>";
+                        if (playerLadder == "wb") ladderPill = "<span class='wb'>WB " + ladderPillIcons + "</span>";
+                        if (playerLadder == "nowb") ladderPill = "<span class='nowb'>No WB " + ladderPillIcons + "</span>";
 
                         var userName = item["user"]["name"].replaceAll("<", "&lt;").replaceAll(">", "&gt;");
                     
