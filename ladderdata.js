@@ -14,6 +14,14 @@ var ladderdata =
         "exceptions": {}
     },
 
+    "76561197985358612":
+    {
+        "default": "wb",
+        "exceptions": {}
+    },
+
+    // exceptions
+
     "76561198158990613":
     {
         "default": "unassigned",
