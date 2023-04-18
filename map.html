@@ -88,9 +88,19 @@
                     if (items == 100) break;
 
                     var playerLadder = "unassigned"
+                    var playerExceptions = []
                     if (item["steam_id"] in ladderdata)
                     {
-                        playerLadder = ladderdata[item["steam_id"]]
+                        playerLadder = ladderdata[item["steam_id"]]["default"]
+                        playerExceptions = ladderdata[item["steam_id"]]["exceptions"]
+
+                        if (mapName in playerExceptions)
+                        {
+                            //if (playerExceptions[mapName]["time"] == item["time"])
+                            //{
+                                playerLadder = playerExceptions[mapName];
+                            //}
+                        }
                     }
 
                     if (playerLadder != "banned" &&
@@ -98,6 +108,11 @@
                         (ladder == "wb" && (playerLadder == "wb")) ||
                         (ladder == "combined")))
                     {
+                        if (item[mapName] in playerExceptions)
+                        {
+
+                        }
+
                         table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
                                             "<td>" + (item["rank"] - rankSubtract) + "</td>" +
                                             "<td>" + item["user"]["name"] + "</td>" +
