@@ -7,6 +7,12 @@ var ladderdata =
         "exceptions": {}
     },
 
+    "76561198121090646":
+    {
+        "default": "nowb",
+        "exceptions": {}
+    },
+
     // WB Players
     "76561198054382627":
     {
