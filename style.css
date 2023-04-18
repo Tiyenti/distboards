@@ -1,0 +1,146 @@
+body
+{
+    font-family: "Droid Sans", Arial, Arial, Helvetica, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    font-size: 100%;
+    line-height: 30px;
+    background-color: rgb(68, 68, 68);
+    color: #ebebeb;
+}
+
+body.dark
+{
+    background-color: #1c1c1c;
+    color: rgb(226, 226, 226);
+}
+
+body.light
+{
+
+}
+
+span.wb
+{
+    background-color: #ff5757;
+    font-size: 90%;
+    padding: 3px 6px 3px 6px;
+    border-radius: 10px;
+    color: #121212;
+    font-weight: bold
+}
+span.nowb
+{
+    background-color: #a9a9ff;
+    font-size: 90%;
+    padding: 3px 6px 3px 6px;
+    border-radius: 10px;
+    color: #242424;
+    font-weight: bold;
+}
+
+#header-background
+{
+    background-color: #080808;
+    margin-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+
+#header
+{
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    width: 100%;
+}
+
+#header-logo
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.header-link, .header-link:hover
+{
+    text-decoration: none;
+    display: table-cell;
+    vertical-align: middle;
+    width: 58px;
+    max-width: 120px;
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: center;
+}
+
+#content-container
+{
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+
+hr
+{
+    border-style: solid;
+    border-color: #555;
+    border-width: 1px;
+}
+
+a
+{
+    color: rgb(255 188 0);
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: rgb(255 188 0);;
+    text-decoration: underline;
+}
+
+#header a
+{
+    color: rgb(200,200,200);
+}
+#header a:hover
+{
+    color: #fff;   
+}
+
+code
+{
+    background-color: #F0F0F0;
+    padding: 2px;
+}
+
+#the-leaderboard
+{
+    width: 70%;
+    margin: 10px auto auto;
+    border: 1px solid black;
+    padding: 0px 10px 0px 10px;
+    text-align: center;
+}
+
+/* bottom nav */
+  
+.bottomnav
+{
+    width: auto;
+}
+
+.bottomnav a {
+display: block;
+width: 50%;
+float: left;
+}
+
+.bottomnav .next {
+text-align: right;
+float: right;
+}

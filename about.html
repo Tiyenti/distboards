@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Distance Leaderboard Site</title>
+        <title>DistBoards</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
     </head>
     <body>
-        <h1>Distance Leaderboard Site</h1>
-
-        <a href="index.html">Levels</a> - <a href="about.html">About</a>
+        <div id="header-background">
+            <div id="header">
+                <a href="index.html">DistBoards</a>
+                <a class="header-link" href="index.html">Levels</a>
+                <a class="header-link" href="about.html">About</a>
+            </div>
+        </div>
+        <div id="content-container">
+            <div id="content">
 
         <h2>About</h2>
         This is a site set up to track the Distance in-game leaderboards and provide additional metadata and 
@@ -28,8 +35,11 @@
         if the player does not normally WB but has done so on a specific map. If you want to assign yourself a default ladder,
         you can do so by asking Tiyenti through some place, be that on the official Distance Discord, or otherwise. On the leaderboard 
         pages themselves, you can choose either "Exclude WB", "WB Only", or "All Times"; Exclude WB will assume all unassigned times are 
-        No WB times, given that the technique has historically not been that popular, although be sure to keep in mind that this 
-        is not a guaruntnee.
+        No WB times, given that the technique has historically not been that popular. For all ladders, keep in mind that the listed ladder
+        may not necessarily be accurate; defaults are given based on what the players themselves have requested, although they be may be
+        manually changed by a site manager if it is determined they are not playing by their chosen ladder's rules.
+            </div>
+        </div>
 
     </body>
 </html>

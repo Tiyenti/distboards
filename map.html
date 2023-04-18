@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Distance Leaderboard Site</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
         <script src="./ladderdata.js"></script>
         <script>
 
@@ -79,7 +80,7 @@
 
                 var table = document.getElementById("the-leaderboard");
                 
-                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>Ladder</th><th>Time</th></tr>";
+                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>Time</th></tr>";
 
                 var rankSubtract = 0;
                 var items = 0;
@@ -113,10 +114,13 @@
 
                         }
 
+                        var ladderPill = ""
+                        if (playerLadder == "wb") ladderPill = "<span class='wb'>WB</span>";
+                        if (playerLadder == "nowb") ladderPill = "<span class='nowb'>No WB</span>";
+
                         table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
                                             "<td>" + (item["rank"] - rankSubtract) + "</td>" +
-                                            "<td>" + item["user"]["name"] + "</td>" +
-                                            "<td>" + playerLadder + "</td>" + 
+                                            "<td>" + item["user"]["name"] + " " + ladderPill + "</td>" +
                                             "<td>" + formatTime(item["time"]) + "</td>" +
                                              "</tr>"
 
@@ -151,16 +155,23 @@
         </script>
     </head>
     <body>
-        <h1>Distance Leaderboard Site</h1>
+        <div id="header-background">
+            <div id="header">
+                <a href="index.html">DistBoards</a>
+                <a class="header-link" href="index.html">Levels</a>
+                <a class="header-link" href="about.html">About</a>
+            </div>
+        </div>
+        <div id="content-container">
+            <div id="content">
+                <h2 id="map-name-header">Loading...</h2>
 
-        <a href="index.html">Levels</a> - <a href="about.html">About</a>
-
-        <h2 id="map-name-header">Loading...</h2>
-
-        Filter - <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
-        <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
-
-        <table id="the-leaderboard" border="1">
-        </table>
+                Filter - <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
+                <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
+        
+                <table id="the-leaderboard">
+                </table>
+            </div>
+        </div>
     </body>
 </html>
