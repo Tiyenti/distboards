@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Distance Leaderboard Site</title>
+        <title>DistBoards</title>
         <link rel="stylesheet" href="style.css" type="text/css" />
         <script src="./ladderdata.js"></script>
         <script>
@@ -13,6 +13,23 @@
 
 
             if (board == null) board = "combined";
+
+            var challengeLevels = [ "Detached", "44 Second Theory", "Transfer", "Divide",
+                                    "Thunder Struck", "Electric", "Descent", "Disassembly Line", 
+                                    "Red Heat", "Grinder", "Dodge", "Elevation", "Obsidian",
+                                    "Hexahorrific", "Variant Blue", "Biotec 4"]
+
+            var stuntLevels = [ "Atrium", "Neon Park", "Stuntware 2051", "Spooky Town", "Quantum Core",
+                                "Syncopation", "Fleeting Images", "Canopy" ]
+
+            var modetoGrab = "sprint_leaderboard_entries"
+            var scoreName = "time"
+            if (challengeLevels.includes(mapName)) modetoGrab = "challenge_leaderboard_entries"
+            if (stuntLevels.includes(mapName))
+            {
+                modetoGrab = "stunt_leaderboard_entries"
+                scoreName = "score"
+            }
 
             // snipped copied from the GraphQL code exporter, with some adjustments
 
@@ -35,14 +52,14 @@
             const operationsDoc = `
             query MyQuery {
             get_official_level_by_name(args: {level_name: "` + mapName + `"}) {
-                sprint_leaderboard_entries {
+                ` + modetoGrab + ` {
                 user {
                     name
                     steam_id
                 }
                 steam_id
                 rank
-                time
+                ` + scoreName + `
                 }
             }
             }
@@ -75,16 +92,20 @@
         <script>
             var receivedLeaderboardData = null;
 
+           
+
             function fillLeaderboard(data, ladder)
             {
 
                 var table = document.getElementById("the-leaderboard");
                 
-                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>Time</th></tr>";
+                var scoreNameStr = "Time"
+                if (modetoGrab == "stunt_leaderboard_entries") scoreNameStr = "Score";
+                table.innerHTML = "<tr><th>Rank</th><th>Name</th><th>" + scoreNameStr + "</th></tr>";
 
                 var rankSubtract = 0;
                 var items = 0;
-                for (var item of data["get_official_level_by_name"][0]["sprint_leaderboard_entries"])
+                for (var item of data["get_official_level_by_name"][0][modetoGrab])
                 {
                     if (items == 100) break;
 
@@ -120,10 +141,14 @@
 
                         var userName = item["user"]["name"].replaceAll("<", "&lt;").replaceAll(">", "&gt;");
                     
+                        var scoreStr = "";
+                        if (scoreName == "time") scoreStr = formatTime(item["time"]);
+                        else scoreStr = item["score"] + " eV"
+
                         table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
                                             "<td>" + (item["rank"] - rankSubtract) + "</td>" +
                                             "<td>" + userName + " " + ladderPill + "</td>" +
-                                            "<td>" + formatTime(item["time"]) + "</td>" +
+                                            "<td>" + scoreStr + "</td>" +
                                              "</tr>"
 
                         items += 1;
@@ -136,7 +161,10 @@
 
                 if (items > 0)
                 {
-                    document.getElementById("map-name-header").innerText = mapName;
+                    var modeStr = "Sprint";
+                    if (modetoGrab == "challenge_leaderboard_entries") modeStr = "Challenge";
+                    if (modetoGrab == "stunt_leaderboard_entries") modeStr = "Stunt";
+                    document.getElementById("map-name-header").innerText = mapName + " (" + modeStr + ")";
                 }
                 else
                 {

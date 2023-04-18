@@ -120,6 +120,8 @@ var ladderdata =
             "Pulse of a Violent Heart": "wb",
             "Rooftops": "wb",
             "Vector Valley": "wb",
+            "44 Second Theory": "wb",
+            "Transfer": "wb"
         },
     },
 
@@ -163,6 +165,8 @@ var ladderdata =
             "Ascension": "wb",
             "Pulse of a Violent Heart": "wb",
             "Shadow of the Beast": "wb",
+            "Hexahorrific": "wb",
+
         },
     },
 
@@ -439,6 +443,15 @@ var ladderdata =
         },
     },
 
+    "76561198019076424":
+    {
+        "default": "unassigned",
+        "exceptions":
+        {
+            "44 Second Theory": "wb",
+        },
+    },
+
     // Banned Players
     "76561198212480060":
     {
@@ -451,6 +464,16 @@ var ladderdata =
         "exceptions": {}
     },
     "76561198128379032":
+    {
+        "default": "banned",
+        "exceptions": {}
+    },
+    "76561198309046254":
+    {
+        "default": "banned",
+        "exceptions": {}
+    },
+    "76561198041678775":
     {
         "default": "banned",
         "exceptions": {}
