@@ -5,19 +5,14 @@ body
     margin: 0px;
     font-size: 100%;
     line-height: 30px;
-    background-color: rgb(68, 68, 68);
+    background-color: rgb(41, 41, 41);
     color: #ebebeb;
 }
 
 body.dark
 {
-    background-color: #1c1c1c;
+    background-color: #030303;
     color: rgb(226, 226, 226);
-}
-
-body.light
-{
-
 }
 
 span.wb

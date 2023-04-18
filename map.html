@@ -118,9 +118,11 @@
                         if (playerLadder == "wb") ladderPill = "<span class='wb'>WB</span>";
                         if (playerLadder == "nowb") ladderPill = "<span class='nowb'>No WB</span>";
 
+                        var userName = item["user"]["name"].replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+                    
                         table.innerHTML += "<tr class=' " + playerLadder + "'>" + 
                                             "<td>" + (item["rank"] - rankSubtract) + "</td>" +
-                                            "<td>" + item["user"]["name"] + " " + ladderPill + "</td>" +
+                                            "<td>" + userName + " " + ladderPill + "</td>" +
                                             "<td>" + formatTime(item["time"]) + "</td>" +
                                              "</tr>"
 
