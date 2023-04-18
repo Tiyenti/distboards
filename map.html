@@ -154,6 +154,12 @@
 
                 return minutes + ":" + secondsStr;
             }
+
+            function changeLeaderboard(data, leaderboard)
+            {
+                window.history.replaceState(null, null, "map.html?name=" + mapName + "&ladder=" + leaderboard);
+                fillLeaderboard(data, leaderboard);
+            }
         </script>
     </head>
     <body>
@@ -168,8 +174,8 @@
             <div id="content">
                 <h2 id="map-name-header">Loading...</h2>
 
-                Filter - <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
-                <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a href="#" onclick="fillLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
+                Filter - <a class="filter" onclick="changeLeaderboard(receivedLeaderboardData, 'nowb')">Exclude WB</a> |
+                <a class="filter" onclick="changeLeaderboard(receivedLeaderboardData, 'wb')">WB Only</a> | <a class="filter" onclick="changeLeaderboard(receivedLeaderboardData, 'combined')">All Times</a>
         
                 <table id="the-leaderboard">
                 </table>

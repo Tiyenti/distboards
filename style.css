@@ -98,6 +98,11 @@ a:hover
     text-decoration: underline;
 }
 
+a.filter
+{
+    cursor: pointer;
+}
+
 #header a
 {
     color: rgb(200,200,200);
