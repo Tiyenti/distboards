@@ -33,6 +33,15 @@ span.nowb
     color: #242424;
     font-weight: bold;
 }
+span.banned
+{
+    background-color: #c98494;
+    font-size: 90%;
+    padding: 3px 6px 3px 6px;
+    border-radius: 10px;
+    color: #000000;
+    font-weight: bold;
+}
 
 #header-background
 {
